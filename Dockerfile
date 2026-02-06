@@ -1,12 +1,15 @@
-FROM n8nio/n8n:latest
+# Vamos usar uma versão específica para garantir estabilidade (Alpine)
+FROM n8nio/n8n:1.76.1
 
+# Troca para root para instalar pacotes
 USER root
 
-# Atualiza e instala Python no sistema Debian/Ubuntu
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip
+# No Alpine Linux, o comando é apk (e não apt-get)
+# Instala o Python 3 e o gerenciador pip
+RUN apk add --update --no-cache python3 py3-pip
 
-# Instala as bibliotecas (o flag --break-system-packages é obrigatório nas versões novas)
+# Instala as bibliotecas que você precisa
 RUN pip3 install --break-system-packages htmldocx python-docx
 
+# Volta para o usuário de segurança do n8n
 USER node
