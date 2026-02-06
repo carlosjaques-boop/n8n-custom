@@ -1,15 +1,14 @@
-# Vamos usar uma versão específica para garantir estabilidade (Alpine)
-FROM n8nio/n8n:2.4.8
+# USAMOS A TAG 'latest-debian' PARA GARANTIR QUE É DEBIAN
+# Isso habilita o comando apt-get com 100% de certeza
+FROM n8nio/n8n:latest-debian
 
-# Troca para root para instalar pacotes
 USER root
 
-# No Alpine Linux, o comando é apk (e não apt-get)
-# Instala o Python 3 e o gerenciador pip
-RUN apk add --update --no-cache python3 py3-pip
+# Instala Python no Debian
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip
 
-# Instala as bibliotecas que você precisa
+# Instala as bibliotecas ignorando o bloqueio de sistema (necessário no Debian recente)
 RUN pip3 install --break-system-packages htmldocx python-docx
 
-# Volta para o usuário de segurança do n8n
 USER node
