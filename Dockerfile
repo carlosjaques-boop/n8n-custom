@@ -1,5 +1,5 @@
 # Vamos usar uma versão específica para garantir estabilidade (Alpine)
-FROM n8nio/n8n:1.76.1
+FROM n8nio/n8n:2.4.8
 
 # Troca para root para instalar pacotes
 USER root
